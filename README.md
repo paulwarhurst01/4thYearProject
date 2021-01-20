@@ -1,10 +1,17 @@
-# Getting Started with Create React App
+## Virtual venv must be initiated in /api
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 'cd api'
+### 'python3 -m venv venv
+### 'source venv/bin/activate'
+### 'pip install -r requirements.txt'
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### 'yarn install'
+
+Installs the needed packages as layed out in package.json
 
 ### `yarn start`
 
@@ -13,6 +20,10 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+### 'yarn start-api'
+
+Starts python backend on [http://localhost:5000](http://localhost:3000) to view in the browser. 
 
 ### `yarn test`
 
