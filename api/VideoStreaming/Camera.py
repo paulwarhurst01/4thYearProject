@@ -9,7 +9,7 @@ class Camera(BaseCamera):
     def frames():
         with picamera.PiCamera() as camera:
             # let camera warm up
-            camera.resolution = (1280, 720)
+            camera.resolution = (852, 480)
             time.sleep(2)
 
             stream = io.BytesIO()

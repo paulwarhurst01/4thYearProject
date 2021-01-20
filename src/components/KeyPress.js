@@ -3,21 +3,21 @@ import { useEffect } from 'react'
 function useKey() {
     useEffect(() => {
         function handleKeyDown(event){
-            switch (event.code){
+            switch (event.code){                        // Switch function 
                 case "KeyW":
-                    //console.log("W key pressed.");
-                    ReturnKey("W");
+                    console.log("W key pressed.");    // Prints key pressed to console
+                    ReturnKey("W");                     // Calls ReturnKey function
                     break;
                 case "KeyA":
-                    //console.log("A key pressed");
+                    console.log("A key pressed");
                     ReturnKey("A")
                     break;
                 case "KeyS":
-                    //console.log("S key pressed");
+                    console.log("S key pressed");
                     ReturnKey("S")
                     break;
                 case "KeyD":
-                    //console.log("S key pressed");
+                    console.log("S key pressed");
                     ReturnKey("D")
                     break;
                 default:
@@ -25,29 +25,29 @@ function useKey() {
             }
         }
     
-        function handleKeyUp(){
-            console.log("Key released");
-            ReturnKey("X")
+        function handleKeyUp(){                                     // Handles keyUp event
+            console.log("Key released");                            // Prints to frontend console
+            ReturnKey("X")                                          // Sends ASCII code for "X"
         }
 
-        document.addEventListener("keydown", handleKeyDown)
-        document.addEventListener("keyup", handleKeyUp)
+        document.addEventListener("keydown", handleKeyDown)         // Adds event listener, calls handleKeyDown
+        document.addEventListener("keyup", handleKeyUp)             // Adds event listener, calls handleKeyUp
         return () => {
-            document.removeEventListener("keydown", handleKeyDown);
-            document.removeEventListener("keyup", handleKeyUp)
+            document.removeEventListener("keydown", handleKeyDown); // Clean up
+            document.removeEventListener("keyup", handleKeyUp)      // Clean up
         }
     }, []);
 }
 
-async function ReturnKey(key){
+async function ReturnKey(key){                          // Waits for a repsonse from receiver
     const response = await fetch('/control_listen', {
-        method: 'POST',
-        headers: {
+        method: 'POST',                                 // Tells backend frontend is posting
+        headers: {                                      // defines data structure of sent data
             'Content-Type': 'text/html'
         },
-        body: (key)
+        body: (key)                                     // Contents of data structure is the key passed
     });
-    if (response.ok){
+    if (response.ok){                                   // Checks for acknowledge
         console.log('response worked')
     }
 }
