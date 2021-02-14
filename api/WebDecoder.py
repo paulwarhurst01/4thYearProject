@@ -1,19 +1,19 @@
-from GPIOManagement import MoveForward, MoveBackward, MoveLeft, MoveRight, ResetMove
+from I2CInterface import move_forward, move_backward, turn_left, turn_right, reset_move
 
 def WebDecoder(keyValue):
     if keyValue == b'W':
         print("Key pressed: W")
-        MoveForward()
+        move_forward()
     if keyValue == b'A':
         print("Key pressed: A")
-        MoveLeft()
+        turn_left()
     if keyValue == b'S':
         print("Key pressed: S")
-        MoveBackward()
+        move_backward()
     if keyValue == b'D':
        print("Key pressed: D")
-       MoveRight()
+       turn_right()
     if keyValue == b'X':
         print("Key released")
-        ResetMove()
+        reset_move()
     

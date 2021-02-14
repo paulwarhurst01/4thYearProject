@@ -2,8 +2,13 @@ from flask import Flask, Response, request
 from VideoStreaming.Camera import Camera
 from LidarControl.Lidar import Lidar
 from WebDecoder import WebDecoder
+from time import sleep
+import threading
+
 
 app = Flask(__name__)
+
+readSensors = True
 
 # Get Camera online
 def gen(Camera):
@@ -31,3 +36,13 @@ def control_listen():
 def display_lidar_data():
     """Fetches data from Lidar Contols"""
     lidar_data = []                                 # empty array made to hold lidar data
+
+def sensor_reader():
+    global readSensors
+    while(readSensors):
+        for s in range (0, 15):
+                pass
+        sleep(1)
+
+x = threading.Thread(target=sensor_reader)
+x.start()
