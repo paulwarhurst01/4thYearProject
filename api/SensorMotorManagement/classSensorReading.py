@@ -50,8 +50,7 @@ class SensorReading(object):
         self.sensor = self.get_sensor_name(id)
         self.unit = self.get_sensor_unit(id)
         self.value = 0.00
-        #self.dateTime = ""
-        #self.time = ""
+        self.time = self.get_time()
 
     def get_sensor_name(self, id: int) -> str:
         """
@@ -65,15 +64,15 @@ class SensorReading(object):
         """
         return sensor_unit[self.id]
 
-    def update_reading(self):
+    def update(self):
         sensorid = int(self.id)
-        #self.time = get_time()
-        #self.date = get_date()
+        self.time = self.get_time()
         if self.id == 16:
             self.value = read_motor_status()
         else:
             self.value = ping_sensor(sensorid)
 
-    def update_date_time():
-        #dateTime = datetime.datetime
-        pass
+    def get_time(self) -> str:
+        dateTime = datetime.datetime.now()
+        time = str(dateTime.hour) + "h" + str(dateTime.minute) + "m" + str(dateTime.second) + "s"
+        return time

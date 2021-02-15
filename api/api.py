@@ -6,9 +6,6 @@ from SensorMotorManagement.SensorHandler import *
 from time import sleep
 import threading
 
-#initiate sensors array
-initiate_sensor_array()
-
 app = Flask(__name__)
 
 # Get Camera online
@@ -43,10 +40,13 @@ def sensor_readings():
     sensordata = get_sensor_data()
 
 def sensors_thread():
+    initiate_sensor_array()
+    sleep(1)
     while(True):
         update_sensor_readings()
         sleep(1)
 
+sleep(2)
 print("Starting sensors thread...")
 x = threading.Thread(target=sensors_thread, daemon = True)
 x.start()

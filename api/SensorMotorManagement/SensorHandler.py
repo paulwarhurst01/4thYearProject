@@ -2,41 +2,45 @@ from .classSensorReading import SensorReading
 from flask import Flask, jsonify
 from tinydb import TinyDB
 from time import sleep
+import datetime 
 
-# Include in flask context
+def update_database_name() -> str:
+    """
+    Creates file name for database
+    """
+    dateTime = datetime.datetime.now()
+    date = str(dateTime.year) + "-" + str(dateTime.month) + "-" + str(dateTime.day)
+    time = str(dateTime.hour) + "h" + str(dateTime.minute) 
+    databasename = date + "-" + time + ".json"
+    return databasename
 
 # Initiate tinydb database
-db = TinyDB('SensorMotorManagement/SensorMotorLogs/db.json')
+db = TinyDB("SensorMotorManagement/SensorMotorLogs/" + update_database_name())
 
 sensorsarray = []
 jsonreadyarray = []
 
 def initiate_sensor_array():
+    global sensorsarray
     for s in range(0, 16):
         sensorsarray.append(SensorReading(s))
     print("Sensors array initiatied")
 
-def get_sensor_data():
+def get_json_ready_data():
+    global jsonreadyarray
     return jsonreadyarray
-    sensordata.append(jsonify(sensorid=sensors_array[sensor].id,
-                            sensorname=sensors_array[sensor].sensor,
-                            sensorunit=sensors_array[sensor].unit,
-                            sensorvalue=sensors_array[sensor].value
-                        )
-                    )
-    db.insert(sensordata)
-    return sensordata
 
 def update_sensor_readings():
     global sensorsarray
     global jsonreadyarray
     for sensor in sensorsarray:
-        sensor.update_reading()
+        sensor.update()
         jsonready = {
             'sensorid' : sensor.id,
             'sensorname' : sensor.sensor,
             'sensorunit' : sensor.unit,
-            'sensorvalue' : sensor.value
+            'sensorvalue' : sensor.value,
+            'time' : sensor.time
             }
         jsonreadyarray.append(jsonready)
         sleep(0.02)
