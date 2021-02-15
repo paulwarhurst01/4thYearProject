@@ -1,4 +1,4 @@
-from I2CInterface import move_forward, move_backward, turn_left, turn_right, reset_move
+from SensorMotorManagement.I2CInterface import move_forward, move_backward, turn_left, turn_right, reset_move
 
 def WebDecoder(keyValue):
     if keyValue == b'W':

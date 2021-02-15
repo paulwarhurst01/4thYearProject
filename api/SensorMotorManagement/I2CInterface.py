@@ -2,17 +2,8 @@ from smbus import SMBus
 
 bus = SMBus(1)      # indicates /dev/i2c-1
 
-motorAddr = 0x8
-sensorAddr = 0x9          # Bus address
-
-# Define 15 availiable sensors
-sensorLPG = 1
-
-def sensor_handler(sensor: int):
-    if sensor > 15:
-        return read_motor_status()
-    else:
-        return ping_sensor()
+motorAddr = 0x9           # motor aI2C address
+sensorAddr = 0x8          # sensor I2C address
 
 def ping_sensor(sensor: int) -> float:
     """
@@ -43,11 +34,14 @@ def format_data(data=[])->float:
     Converts ASCII characters received to a float
         Creates a string from ASCII characters received in data chunk
         Converts this string to a float and returns float
-    """
-    formatted = chr(data[0])
-    for i in range(1, len(data)):
-        formatted = formatted + (chr(data[i]))      
-    return float(formatted)
+    """ 
+    try:
+        formatted = chr(data[0])
+        for i in range(1, len(data)):
+            formatted = formatted + (chr(data[i])) 
+        return float(formatted)
+    except ValueError as e:
+        print(e)
 
 def test_sensor_I2C(sensor: int) -> float:
     """

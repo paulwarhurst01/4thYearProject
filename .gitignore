@@ -22,6 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Python
+# Python and api
 venv 
 __pycache__
+api/SensorMotorManagement/SensorMotorLogs/*
+!api/SensorMotorManagement/SensorMotorLogs/.gitkeep
