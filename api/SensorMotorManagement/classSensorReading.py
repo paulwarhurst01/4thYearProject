@@ -1,22 +1,22 @@
 from .I2CInterface import ping_sensor, read_motor_status
 import datetime
 
+motor_id = 14
+
 sensor_names = [
-    "O2",
-    "CO",
     "LPG",
+    "CO",
+    "Smoke",
+    "Hexane",
+    "Propane",
+    "CO2",
+    "Alcohol",
+    "Amonia",
+    "Acetone",
+    "Tolene",
+    "Temperature",
+    "Humidity",
     "Current",
-    "Sensor5",
-    "Sensor6",
-    "Sensor7",
-    "Sensor8",
-    "Sensor9",
-    "Sensor10",
-    "Sensor11",
-    "Sensor12",
-    "Sensor13",
-    "Sensor14",
-    "Sensor15",
     "Motor Status"
 ]
 
@@ -24,19 +24,16 @@ sensor_unit = [
     "ppm",
     "ppm",
     "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "C",
+    "%",
     "mA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "-",
 ]
 
 class SensorReading(object):
@@ -73,7 +70,7 @@ class SensorReading(object):
     def update(self):
         sensorid = int(self.id)
         self.time = self.get_time()
-        if self.id == 16:
+        if self.id == motor_id:
             self.value = read_motor_status()
         else:
             self.value = ping_sensor(sensorid)

@@ -41,11 +41,11 @@ def sensor_readings():
     return jsonify(sensordata)
 
 def sensors_thread():
-    #initiate_sensor_array()
+    initiate_sensor_array()
     sleep(1)
     while(True):
         update_sensor_readings()
-        sleep(1)
+      #  sleep(1)
 
 sleep(2)
 print("Starting sensors thread...")
