@@ -1,5 +1,4 @@
 from .classSensorReading import SensorReading
-from flask import Flask, jsonify
 from tinydb import TinyDB
 from time import sleep
 import datetime 

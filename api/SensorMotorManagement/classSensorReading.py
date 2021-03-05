@@ -36,7 +36,7 @@ sensor_unit = [
     "mA",
 ]
 
-class SensorReading(object):
+class SensorReading():
     """
     Two Strings: Name of the sensor
                  Unit used by sensor
