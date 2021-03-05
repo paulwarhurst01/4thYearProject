@@ -17,7 +17,8 @@ def update_database_name() -> str:
 # Initiate tinydb database
 db = TinyDB("SensorMotorManagement/SensorMotorLogs/" + update_database_name())
 
-sensorsarray = []
+sensor_data_updating = False
+#sensorsarray = []
 jsonreadyarray = []
 
 def initiate_sensor_array():
@@ -27,22 +28,32 @@ def initiate_sensor_array():
     print("Sensors array initiatied")
 
 def get_json_ready_data():
+    """
+    Relies on boolean jsonreadydata and spinlock
+    """
     global jsonreadyarray
+    global sensor_data_updating
+    #while(sensor_data_updating):
+    #    print("Waiting for sensor data to update")
     return jsonreadyarray
 
 def update_sensor_readings():
-    global sensorsarray
+    global sensor_data_updating
+    #global sensorsarray
     global jsonreadyarray
-    for sensor in sensorsarray:
-        sensor.update()
+    jsonreadyarray = []
+    #sensor_data_updating = True
+    for sensor_id in range(0, 16):
+        sensor = SensorReading(sensor_id)
         jsonready = {
-            'sensorid' : sensor.id,
-            'sensorname' : sensor.sensor,
-            'sensorunit' : sensor.unit,
-            'sensorvalue' : sensor.value,
+            'id' : sensor.id,
+            'sensorName' : sensor.sensor,
+            'sensorUnit' : sensor.unit,
+            'sensorValue' : sensor.value,
             'time' : sensor.time
             }
         jsonreadyarray.append(jsonready)
-        sleep(0.02)
+        sleep(0.05)
     db.insert_multiple(jsonreadyarray)
-    print("New Sensor Data Avaliable")
+    #sensor_data_updating = False
+    #print("New Sensor Data Avaliable")

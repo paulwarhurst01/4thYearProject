@@ -37,10 +37,11 @@ def display_lidar_data():
 
 @app.route('/sensor_readings',methods=['GET'])
 def sensor_readings():
-    sensordata = get_sensor_data()
+    sensordata = get_json_ready_data()
+    return jsonify(sensordata)
 
 def sensors_thread():
-    initiate_sensor_array()
+    #initiate_sensor_array()
     sleep(1)
     while(True):
         update_sensor_readings()
@@ -48,5 +49,5 @@ def sensors_thread():
 
 sleep(2)
 print("Starting sensors thread...")
-x = threading.Thread(target=sensors_thread, daemon = True)
+x = threading.Thread(target=sensors_thread, daemon=True)
 x.start()

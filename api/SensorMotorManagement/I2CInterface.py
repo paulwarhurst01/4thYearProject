@@ -13,6 +13,8 @@ def ping_sensor(sensor: int) -> float:
     try:
         bus.write_byte(sensorAddr, sensor)
         data = bus.read_i2c_block_data(sensorAddr, 0, 4)   # Read 4 bytes from sensor addr, offset: 0
+        #print(data)
+        #print(format_data(data))
         return format_data(data)
 
     except OSError as e:
