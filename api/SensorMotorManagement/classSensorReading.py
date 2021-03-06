@@ -1,4 +1,5 @@
-from .I2CInterface import ping_sensor, read_motor_status
+from .classMotorInterfaces import MotorSensorInterface
+from .classSensorInterface import SensorInterface
 import datetime
 
 motor_id = 14
@@ -46,7 +47,13 @@ class SensorReading():
         self.id = id
         self.sensor = self.get_sensor_name(id)
         self.unit = self.get_sensor_unit(id)
-        self.value = self.get_value(id)
+        if(id == motor_id):
+            motor_addr = 0x9
+            self.interface = MotorSensorInterface(motor_addr)
+        else:
+            sensor_addr = 8
+            self.interface = SensorInterface(sensor_addr, id)
+        self.value = self.get_value()
         self.time = self.get_time()
 
     def get_sensor_name(self, id: int) -> str:
@@ -61,19 +68,13 @@ class SensorReading():
         """
         return sensor_unit[self.id]
 
-    def get_value(self, id: int) -> float:
-        if id == 16:
-            return read_motor_status()
-        else:
-            return ping_sensor(id)
+    def get_value(self):
+        return self.interface.formatted_data
 
     def update(self):
-        sensorid = int(self.id)
+        self.interface.update()
         self.time = self.get_time()
-        if self.id == motor_id:
-            self.value = read_motor_status()
-        else:
-            self.value = ping_sensor(sensorid)
+        self.value = self.get_value()
 
     def get_time(self) -> str:
         dateTime = datetime.datetime.now()

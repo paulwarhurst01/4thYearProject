@@ -1,19 +1,21 @@
-from SensorMotorManagement.I2CInterface import move_forward, move_backward, turn_left, turn_right, reset_move
+from SensorMotorManagement.classMotorInterfaces import MotorControlInterface
+
+MCI = MotorControlInterface(addr=9)
 
 def WebDecoder(keyValue):
     if keyValue == b'W':
         print("Key pressed: W")
-        move_forward()
+        MCI.move_forward()
     if keyValue == b'A':
         print("Key pressed: A")
-        turn_left()
+        MCI.turn_left()
     if keyValue == b'S':
         print("Key pressed: S")
-        move_backward()
+        MCI.move_backward()
     if keyValue == b'D':
        print("Key pressed: D")
-       turn_right()
+       MCI.turn_right()
     if keyValue == b'X':
         print("Key released")
-        reset_move()
+        MCI.reset_move()
     
