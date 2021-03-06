@@ -18,4 +18,3 @@ def WebDecoder(keyValue):
     if keyValue == b'X':
         print("Key released")
         MCI.reset_move()
-    

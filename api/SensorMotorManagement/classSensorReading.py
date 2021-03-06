@@ -3,6 +3,8 @@ from .classSensorInterface import SensorInterface
 import datetime
 
 motor_id = 14
+motor_addr = 0x9
+sensor_addr = 0x8
 
 sensor_names = [
     "LPG",

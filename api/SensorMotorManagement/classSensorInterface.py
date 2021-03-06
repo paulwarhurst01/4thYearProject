@@ -1,8 +1,8 @@
 from .classI2CInterface import I2CInterface
 
 class SensorInterface(I2CInterface):
-    def __init__(self, addr, sensorid: int):
-        I2CInterface.__init__(addr)
+    def __init__(self, addr:int, sensorid: int):
+        I2CInterface.__init__(self, addr)
         self.sensorid = sensorid
         self.data = []    # initialised to empty array
 
@@ -19,7 +19,7 @@ class SensorInterface(I2CInterface):
         """ 
         try:
             formatted = chr(self.data[0])
-            for i in range(1, len(data)):                  
+            for i in range(1, len(self.data)):                  
                 formatted = formatted + (chr(self.data[i])) 
             return float(formatted)
         except ValueError as e:
