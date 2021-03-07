@@ -1,22 +1,25 @@
-from .I2CInterface import ping_sensor
+from .classMotorInterfaces import MotorSensorInterface
+from .classSensorInterface import SensorInterface
 import datetime
 
+motor_id = 14
+motor_addr = 0x9
+sensor_addr = 0x8
+
 sensor_names = [
-    "O2",
-    "CO",
     "LPG",
+    "CO",
+    "Smoke",
+    "Hexane",
+    "Propane",
+    "CO2",
+    "Alcohol",
+    "Amonia",
+    "Acetone",
+    "Tolene",
+    "Temperature",
+    "Humidity",
     "Current",
-    "Sensor5",
-    "Sensor6",
-    "Sensor7",
-    "Sensor8",
-    "Sensor9",
-    "Sensor10",
-    "Sensor11",
-    "Sensor12",
-    "Sensor13",
-    "Sensor14",
-    "Sensor15",
     "Motor Status"
 ]
 
@@ -24,22 +27,19 @@ sensor_unit = [
     "ppm",
     "ppm",
     "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "ppm",
+    "C",
+    "%",
     "mA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "TBA",
-    "-",
 ]
 
-class SensorReading(object):
+class SensorReading():
     """
     Two Strings: Name of the sensor
                  Unit used by sensor
@@ -49,7 +49,13 @@ class SensorReading(object):
         self.id = id
         self.sensor = self.get_sensor_name(id)
         self.unit = self.get_sensor_unit(id)
-        self.value = 0.00
+        if(id == motor_id):
+            motor_addr = 0x9
+            self.interface = MotorSensorInterface(motor_addr)
+        else:
+            sensor_addr = 8
+            self.interface = SensorInterface(sensor_addr, id)
+        self.value = self.get_value()
         self.time = self.get_time()
 
     def get_sensor_name(self, id: int) -> str:
@@ -64,13 +70,13 @@ class SensorReading(object):
         """
         return sensor_unit[self.id]
 
+    def get_value(self):
+        return self.interface.formatted_data
+
     def update(self):
-        sensorid = int(self.id)
+        self.interface.update()
         self.time = self.get_time()
-        if self.id == 16:
-            self.value = read_motor_status()
-        else:
-            self.value = ping_sensor(sensorid)
+        self.value = self.get_value()
 
     def get_time(self) -> str:
         dateTime = datetime.datetime.now()

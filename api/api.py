@@ -1,12 +1,17 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, request, jsonify
 from VideoStreaming.Camera import Camera
 from LidarControl.Lidar import Lidar
 from WebDecoder import WebDecoder
-from SensorMotorManagement.SensorHandler import *
+from SensorMotorManagement.classSensorHandler import SensorHandler
 from time import sleep
 import threading
+import logging
 
 app = Flask(__name__)
+
+sensorHandler = SensorHandler()
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 # Get Camera online
 def gen(Camera):
@@ -37,16 +42,14 @@ def display_lidar_data():
 
 @app.route('/sensor_readings',methods=['GET'])
 def sensor_readings():
-    sensordata = get_sensor_data()
+    return jsonify(sensorHandler.jsonreadyarray)
 
 def sensors_thread():
-    initiate_sensor_array()
-    sleep(1)
     while(True):
-        update_sensor_readings()
+        sensorHandler.update()
         sleep(1)
 
 sleep(2)
 print("Starting sensors thread...")
-x = threading.Thread(target=sensors_thread, daemon = True)
+x = threading.Thread(target=sensors_thread, daemon=True)
 x.start()
