@@ -19,8 +19,9 @@ export default function DataTable() {
                 setSensorData(data)
             })
         );
-    }, [seconds]);
+    }, [seconds]);  // Depends on seconds variable
 
+    //One second timer sets seconds
     useEffect(()=>{
         const interval = setInterval(() => {
             setSeconds(seconds => seconds + 1);

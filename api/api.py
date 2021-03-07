@@ -9,7 +9,10 @@ import logging
 
 app = Flask(__name__)
 
+#initiate sensorHandler
 sensorHandler = SensorHandler()
+
+#suppress logging of every ping
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
@@ -45,10 +48,14 @@ def sensor_readings():
     return jsonify(sensorHandler.jsonreadyarray)
 
 def sensors_thread():
+    """
+    Periodically updates the sensor class
+    """
     while(True):
         sensorHandler.update()
         sleep(1)
 
+# Give time for set up to complete before starting thread that updates SensorHandler
 sleep(2)
 print("Starting sensors thread...")
 x = threading.Thread(target=sensors_thread, daemon=True)

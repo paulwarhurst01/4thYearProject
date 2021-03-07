@@ -39,9 +39,9 @@ sensor_unit = [
 
 class SensorReading():
     """
-    Two Strings: Name of the sensor
-                 Unit used by sensor
-    Integer Value: Value
+    -> Contains all information for a sensor reading
+    -> Contains interface needed to complete reading
+    -> contains functions to update readings
     """
     def __init__(self, id: int):
         self.id = id
@@ -69,14 +69,24 @@ class SensorReading():
         return sensor_unit[self.id]
 
     def get_value(self):
+        """
+        Retrieves formatted data from interface
+        """
         return self.interface.formatted_data
 
     def update(self):
+        """
+        updates sensor instance values
+        updates sensor reading
+        """
         self.interface.update()
         self.time = self.get_time()
         self.value = self.get_value()
 
     def get_time(self) -> str:
+        """
+        Returns time as a string
+        """
         dateTime = datetime.datetime.now()
         time = str(dateTime.hour) + "h" + str(dateTime.minute) + "m" + str(dateTime.second) + "s"
         return time
