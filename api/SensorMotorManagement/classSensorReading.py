@@ -3,8 +3,6 @@ from .classSensorInterface import SensorInterface
 import datetime
 
 motor_id = 14
-motor_addr = 0x9
-sensor_addr = 0x8
 
 sensor_names = [
     "LPG",
@@ -50,7 +48,7 @@ class SensorReading():
         self.sensor = self.get_sensor_name(id)
         self.unit = self.get_sensor_unit(id)
         if(id == motor_id):
-            motor_addr = 0x9
+            motor_addr = 9
             self.interface = MotorSensorInterface(motor_addr)
         else:
             sensor_addr = 8
