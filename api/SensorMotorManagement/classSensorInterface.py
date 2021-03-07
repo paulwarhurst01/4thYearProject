@@ -24,6 +24,8 @@ class SensorInterface(I2CInterface):
             return float(formatted)
         except ValueError as e:
             print(e)
+        except TypeError as e:
+            print(e)
 
     def update(self):
         self.data = self.get_data()

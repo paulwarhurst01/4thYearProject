@@ -29,15 +29,7 @@ class SensorHandler():
         print("Sensors array initiatied")
         return sensorsarray
 
-    def get_json_ready_data(self):
-        global jsonreadyarray
-        global sensor_data_updating
-        while(sensor_data_updating):
-            sleep(0.02)
-            print("Waiting for sensor array to update...")
-        return jsonreadyarray
-
-    def update_sensor_readings(self):
+    def update(self):
         tempjsonreadyarray = []
         for sensor in self.sensorsarray:
             sensor.update()
@@ -50,5 +42,5 @@ class SensorHandler():
                 }
             tempjsonreadyarray.append(jsonready)
             sleep(0.02)
-        self.db.insert_multiple(jsonreadyarray)
+        self.db.insert_multiple(tempjsonreadyarray)
         self.jsonreadyarray = tempjsonreadyarray

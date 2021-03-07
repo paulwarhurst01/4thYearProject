@@ -10,6 +10,7 @@ const columns = [
 
 export default function DataTable() {
     const [sensorData, setSensorData] = useState([]);
+    const [seconds, setSeconds] = useState([]);
 
     useEffect(() => {
         fetch("sensor_readings").then(response =>
@@ -18,11 +19,18 @@ export default function DataTable() {
                 setSensorData(data)
             })
         );
-    }, []);
+    }, [seconds]);
+
+    useEffect(()=>{
+        const interval = setInterval(() => {
+            setSeconds(seconds => seconds + 1);
+        },1000);
+        return() => clearInterval(interval);
+    },[]);
 
     return (
-        <div style={{ height: 400, width: 465}}>
-            <DataGrid rows={sensorData} columns = {columns} pageSize={5} />
+        <div style={{ height: 500, width: 465}}>
+            <DataGrid rows={sensorData} columns = {columns} pageSize={13} />
         </div>
     );
 }
