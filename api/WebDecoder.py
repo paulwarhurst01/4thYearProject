@@ -1,20 +1,22 @@
 from SensorMotorManagement.classMotorInterfaces import MotorControlInterface
+import logging
 
-MCI = MotorControlInterface(addr=9)
+motor_addr = 9
+MCI = MotorControlInterface(motor_addr)
 
 def WebDecoder(keyValue):
     if keyValue == b'W':
-        print("Key pressed: W")
+        logging.debug("Key pressed: W")
         MCI.move_forward()
     if keyValue == b'A':
-        print("Key pressed: A")
+        logging.debug("Key pressed: A")
         MCI.turn_left()
     if keyValue == b'S':
-        print("Key pressed: S")
+        logging.debug("Key pressed: S")
         MCI.move_backward()
     if keyValue == b'D':
-       print("Key pressed: D")
+       logging.debug("Key pressed: D")
        MCI.turn_right()
     if keyValue == b'X':
-        print("Key released")
+        logging.debug("Key pressed: X")
         MCI.reset_move()

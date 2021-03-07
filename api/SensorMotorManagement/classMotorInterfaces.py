@@ -17,14 +17,8 @@ class MotorSensorInterface(I2CInterface):
         self.formatted_data = self.get_formatted_data()
 
 class MotorControlInterface(I2CInterface):
-
     def control_movement(self, direction: int):
         self.write_byte(direction)
-        try:
-            bus.write_byte(motorAddr, 0)
-        except OSError as e:
-            print(e)
-            print("Sensor device offline or incorrect address set")
 
     def move_forward(self):
         self.control_movement(1)
