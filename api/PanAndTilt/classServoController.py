@@ -13,15 +13,18 @@ class ServoController():
         self.pin = pin
         self.pwm = GPIO.PWM(pin, 50)
         self.pwm.start(0)
+        self.sensitivity_setting = 4    # Initialised at maximum sensitivity setting
+        self.sensitivity = [0.04, 0.03, 0.02, 0.01, 0] # Five sensitivity settings 0 -> 4 inclusive
+        # Need to rethink sensitivities - 0.075 is centre!
 
     
     def turn_ccw(self):
-        duty_cycle = 0.1
+        duty_cycle = 0.1 - self.sensitivity[self.sensitivity_setting]
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty_cycle)
 
     def turn_cw(self):
-        duty_cycle = 0.05
+        duty_cycle = 0.05 + self.sensitivity[self.sensitivity_setting]
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty_cycle)
 
