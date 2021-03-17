@@ -1,20 +1,25 @@
-from flask import Flask, Response, request, jsonify
+from flask import Flask, Response, request, jsonify, send_from_directory
 from VideoStreaming.Camera import Camera
 from LidarControl.Lidar import Lidar
-from WebDecoder import WebDecoder
+from classWebDecoder import WebDecoder
 from SensorMotorManagement.classSensorHandler import SensorHandler
 from time import sleep
 import threading
 import logging
 
 app = Flask(__name__)
-
-#initiate sensorHandler
-sensorHandler = SensorHandler()
-
 #suppress logging of every ping
 log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
+log.setLevel(logging.DEBUG)
+
+# initiate sensorHandler
+sensorHandler = SensorHandler()
+
+# initiate WebDecoder instance
+webDecoder = WebDecoder(motor_addr=9)
+
+# latest scan str
+latestScan = "LatestScan.xyz" # initialised as empty string
 
 # Get Camera online
 def gen(Camera):
@@ -35,13 +40,24 @@ def video_feed():
 @app.route('/control_listen', methods=['POST'])
 def control_listen():
     keyValue = request.get_data()            # Flask request for data, returns data as byte
-    WebDecoder(keyValue)
+    logging.debug("Key pressed: " + str(keyValue))
+    webDecoder.decode(keyValue)
     return 'Done', 202
 
-@app.route('/display_lidar_data')
+@app.route('/start_new_lidar_scan', methods=['GET'])
+def start_new_lidar_scan():
+    print("New Lidar scan started")
+    return 'Done', 202
+
+@app.route('/get_lidar_scan')
 def display_lidar_data():
+    #global latestScan
     """Fetches data from Lidar Contols"""
-    lidar_data = []                                 # empty array made to hold lidar data
+    return send_from_directory('/LidarControl/Scanfiles', latestScan, as_attachment=True)
+
+@app.route('/perfrom_lidar_scan', methods=['POST'])
+def perfrom_lidar_scan():
+    print("Lidar Scan requested")
 
 @app.route('/sensor_readings',methods=['GET'])
 def sensor_readings():
