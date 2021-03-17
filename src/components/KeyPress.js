@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
 
+// Include useState to send 'M' back if pan and tilt keys released
+
 function useKey() {
     useEffect(() => {
         function handleKeyDown(event){
@@ -10,15 +12,27 @@ function useKey() {
                     break;
                 case "KeyA":
                     console.log("A key pressed");
-                    ReturnKey("A")
+                    ReturnKey("A");
                     break;
                 case "KeyS":
                     console.log("S key pressed");
-                    ReturnKey("S")
+                    ReturnKey("S");
                     break;
                 case "KeyD":
                     console.log("S key pressed");
-                    ReturnKey("D")
+                    ReturnKey("D");
+                    break;
+                case "KeyJ":
+                    ReturnKey("J");
+                    break;
+                case "KeyK":
+                    ReturnKey("K");
+                    break;
+                case "KeyL":
+                    ReturnKey("L");
+                    break;
+                case "KeyI":
+                    ReturnKey("I");
                     break;
                 default:
                     break;
