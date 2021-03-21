@@ -8,6 +8,9 @@ import MenuIcon  from '@material-ui/icons/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
+// HOOK
+import hookContext from '../hooks';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -21,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavBar() {
+  const { lidarCall, resetArduino, resetMotors} = hookContext();
   const classes = useStyles();
 
   const [anchorEl, setAnchorEI] = React.useState(null);
@@ -29,9 +33,23 @@ export default function NavBar() {
     setAnchorEI(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEI(null);
-  };
+  const handleClose = async (data) => {
+    console.log(typeof lidarCall);
+    switch(data){
+      case 1: 
+        lidarCall();
+        break;
+      case 2: 
+        resetArduino();
+        break;
+      case 3: 
+        resetMotors();
+          break;
+
+  default: break;
+}
+setAnchorEI(null);
+};
 
   return (
     <div className={classes.root}>
@@ -49,9 +67,9 @@ export default function NavBar() {
               onclose={handleClose}
             >
               <MenuItem onClick={handleClose}>Close Menu</MenuItem>
-              <MenuItem onClick={handleClose}>Perform Lidar Scan</MenuItem>
-              <MenuItem onClick={handleClose}>Reset Arduinos</MenuItem>
-              <MenuItem onClick={handleClose}>Reset Motor Control</MenuItem>
+              <MenuItem onClick={() => handleClose(1)}>Perform Lidar Scan</MenuItem>
+              <MenuItem onClick={() => handleClose(2)}>Reset Arduino</MenuItem>
+              <MenuItem onClick={() => handleClose(3)}>Reset Motor Control</MenuItem>
             </Menu>
           </div>
           <Typography variant="h6" className={classes.title}>

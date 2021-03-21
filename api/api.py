@@ -10,7 +10,7 @@ import logging
 app = Flask(__name__)
 #suppress logging of every ping
 log = logging.getLogger('werkzeug')
-log.setLevel(logging.DEBUG)
+log.setLevel(logging.ERROR)
 
 # initiate sensorHandler
 sensorHandler = SensorHandler()
@@ -55,9 +55,11 @@ def display_lidar_data():
     """Fetches data from Lidar Contols"""
     return send_from_directory('/LidarControl/Scanfiles', latestScan, as_attachment=True)
 
-@app.route('/perfrom_lidar_scan', methods=['POST'])
+@app.route('/perfrom_lidar_scan', methods=['GET'])
 def perfrom_lidar_scan():
     print("Lidar Scan requested")
+    return 'Done', 202
+
 
 @app.route('/sensor_readings',methods=['GET'])
 def sensor_readings():

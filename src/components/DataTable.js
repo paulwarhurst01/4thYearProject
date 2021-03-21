@@ -15,7 +15,7 @@ export default function DataTable() {
     useEffect(() => {
         fetch("sensor_readings").then(response =>
             response.json().then(data => {
-                console.log(data)
+                //console.log(data)
                 setSensorData(data)
             })
         );

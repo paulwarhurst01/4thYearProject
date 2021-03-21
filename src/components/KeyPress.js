@@ -7,19 +7,15 @@ function useKey() {
         function handleKeyDown(event){
             switch (event.code){                        // Switch function 
                 case "KeyW":
-                    console.log("W key pressed.");    // Prints key pressed to console
                     ReturnKey("W");                     // Calls ReturnKey function
                     break;
                 case "KeyA":
-                    console.log("A key pressed");
                     ReturnKey("A");
                     break;
                 case "KeyS":
-                    console.log("S key pressed");
                     ReturnKey("S");
                     break;
                 case "KeyD":
-                    console.log("S key pressed");
                     ReturnKey("D");
                     break;
                 case "KeyJ":
