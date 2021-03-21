@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 from time import sleep
 
 # running at 50Hz - Period = 20ms
@@ -28,7 +28,7 @@ class ServoController():
         GPIO.output(self.pin, True)
         self.pwm.ChangeDutyCycle(duty_cycle)
 
-    def stop_turning(self)
+    def stop_turning(self):
         duty_cycle = 0
         GPIO.output(self.pin, False)
         self.pwm.ChangeDutyCycle(duty_cycle)

@@ -22,12 +22,12 @@ class I2CInterface(object):
             print(e)
             print(self.errormsg)
 
-    def read_data_4Bchunk(self):
+    def read_data_7Bchunk(self):
         """
-        Reads and returns a 4-byte data chunk
+        Reads and returns a 7-byte data chunk
         """
         try:
-            data = self.bus.read_i2c_block_data(self.addr, 0, 4)
+            data = self.bus.read_i2c_block_data(self.addr, 0, 7)
             return data
         except OSError as e:
             print(e)

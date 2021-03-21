@@ -1,14 +1,15 @@
 from SensorMotorManagement.classMotorInterfaces import MotorControlInterface
+#from PanAndTilt.classServoController import ServoController
 
 class WebDecoder():
     def __init__(self, motor_addr):
         self.MCI = MotorControlInterface(motor_addr)
-        self.pan = ServoController()
-        self.tilt = ServoController()
+        #self.pan = ServoController(18)
+        #self.tilt = ServoController(19)
         self.invert = False
 
-    def toggle_inverted(self):
-        self.invert = !(invert)
+    #def toggle_inverted(self):
+     #   self.invert = !(invert)
 
     def decode(self, keyValue):
         if keyValue == b'W':
@@ -24,7 +25,7 @@ class WebDecoder():
         if keyValue == b'I':
             if invert:
                 tilt.rotate_cw()
-            else
+            else:
                 tilt.rotate_ccw()
         if keyValue == b'J':
             pan.rotate_ccw()

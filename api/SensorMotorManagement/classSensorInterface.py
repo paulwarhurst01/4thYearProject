@@ -8,7 +8,7 @@ class SensorInterface(I2CInterface):
 
     def get_data(self):
         self.write_byte(self.sensorid)
-        data = self.read_data_4Bchunk()
+        data = self.read_data_7Bchunk()
         return data
 
     def format_data(self)->float: 
@@ -21,7 +21,7 @@ class SensorInterface(I2CInterface):
             formatted = chr(self.data[0])
             for i in range(1, len(self.data)):                  
                 formatted = formatted + (chr(self.data[i])) 
-            return float(formatted)
+            return str(formatted)
         except ValueError as e:
             print(e)
         except TypeError as e:
