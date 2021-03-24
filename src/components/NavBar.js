@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NavBar() {
-  const { lidarCall, resetArduino, resetMotors} = hookContext();
+  const { lidarCall, resetArduino} = hookContext();
   const classes = useStyles();
 
   const [anchorEl, setAnchorEI] = React.useState(null);

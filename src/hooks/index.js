@@ -11,6 +11,7 @@ const HookContext =  () => {
 
      return {
          lidarCall, resetArduino
+     }
 }
 
 export default HookContext;
