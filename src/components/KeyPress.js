@@ -8,27 +8,34 @@ function useKey() {
             switch (event.code){                        // Switch function 
                 case "KeyW":
                     ReturnKey("W");                     // Calls ReturnKey function
+                    console.log("Move forward");
                     break;
                 case "KeyA":
                     ReturnKey("A");
+                    console.log("Move left")
                     break;
                 case "KeyS":
                     ReturnKey("S");
+                    console.log("Move right")
                     break;
                 case "KeyD":
                     ReturnKey("D");
+                    console.log("Move back")
                     break;
                 case "KeyJ":
                     ReturnKey("J");
+                    console.log("Look left");
                     break;
                 case "KeyK":
-                    ReturnKey("K");
+                    ReturnKey("K");console.log("Look down");
                     break;
                 case "KeyL":
                     ReturnKey("L");
+                    console.log("Look left");
                     break;
                 case "KeyI":
                     ReturnKey("I");
+                    console.log("Look up");
                     break;
                 default:
                     break;
