@@ -9,14 +9,9 @@ const HookContext =  () => {
         return await axios.get('/reset_arduino');
     };
 
-    const resetMotors = async() => {
-        return await axios.get('/reset_motor_controller');
-    };
-
      return {
          lidarCall, resetArduino, resetMotors
      }
-
 }
 
 export default HookContext;
