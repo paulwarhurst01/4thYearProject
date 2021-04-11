@@ -8,6 +8,9 @@ class I2CInterface(object):
         self.formatted_data = ""
 
     def write_byte(self, data: int):
+        """
+        Writes a single byte of data
+        """
         try:
             self.bus.write_byte(self.addr, data)
         except OSError as e:
@@ -15,6 +18,9 @@ class I2CInterface(object):
             print(self.errormsg)
     
     def read_byte(self):
+        """
+        Reads a single byte of data
+        """
         try:
             data = self.bus.read_byte(self.addr)
             return data
@@ -22,13 +28,17 @@ class I2CInterface(object):
             print(e)
             print(self.errormsg)
 
-    def read_data_7Bchunk(self):
+    def read_data_chunk(self, number_of_bytes: int):
         """
-        Reads and returns a 7-byte data chunk
+        Reads and returns data chunk of size <number_of_bytes> bytes
         """
         try:
-            data = self.bus.read_i2c_block_data(self.addr, 0, 7)
+            data = self.bus.read_i2c_block_data(self.addr, 0, number_of_bytes)
             return data
         except OSError as e:
             print(e)
             print(self.errormsg)
+
+
+
+

@@ -66,6 +66,7 @@ setAnchorEI(null);
               <MenuItem onClick={handleClose}>Close Menu</MenuItem>
               <MenuItem onClick={() => handleClose(1)}>Perform Lidar Scan</MenuItem>
               <MenuItem onClick={() => handleClose(2)}>Reset Arduino</MenuItem>
+              <MenuItem onClick={handleClose}>Download Latest Scan</MenuItem>
             </Menu>
           </div>
           <Typography variant="h6" className={classes.title}>

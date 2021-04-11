@@ -1,4 +1,4 @@
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 from time import sleep
 
 # running at 50Hz - Period = 20ms
@@ -7,28 +7,67 @@ from time import sleep
 # 1.0 ms - Turns servo CW - Duty cycle = 5%
 
 class ServoController():
-    def __init__(self, pin):
+    def __init__(self, pin, center_dc = 7, increment = 0.25):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(pin, GPIO.OUT)
         self.pin = pin
+        self.center_dc = center_dc          # the duty cycle for which the servo is centred
+        self.duty_cycle = self.center_dc    # current duty cycle, begins at centre 
+        self.increment = increment          # sets the change size of duty_cycle
+        self.delay = 0.2                    # default sleep value
+        self.turning = False
         self.pwm = GPIO.PWM(pin, 50)
         self.pwm.start(0)
-        self.sensitivity_setting = 4    # Initialised at maximum sensitivity setting
-        self.sensitivity = [0.04, 0.03, 0.02, 0.01, 0] # Five sensitivity settings 0 -> 4 inclusive
-        # Need to rethink sensitivities - 0.075 is centre!
 
+    def print_details(self):
+        print("centre_dc: " + str(self.center_dc))
+        print("increment: " + str(self.increment))
+
+    def change_increment(self, new_increment):
+        """
+        resets duty cycle to remain in sink
+        """
+        self.duty_cycle = 7
+        self.increment = new_increment
+
+    def change_delay(self, delay):
+        self.delay = delay
+
+    def set_pwm(self):
+        GPIO.output(self.pin, True)
+        self.pwm.ChangeDutyCycle(self.duty_cycle)
     
     def turn_ccw(self):
-        duty_cycle = 0.1 - self.sensitivity[self.sensitivity_setting]
-        GPIO.output(self.pin, True)
-        self.pwm.ChangeDutyCycle(duty_cycle)
+        """
+            decrements the duty cycle
+        """
+        self.turning = True
+        while self.turning:
+            if self.duty_cycle > 2:
+                self.duty_cycle = self.duty_cycle - self.increment
+            self.set_pwm()
+            sleep(self.delay)
 
     def turn_cw(self):
-        duty_cycle = 0.05 + self.sensitivity[self.sensitivity_setting]
-        GPIO.output(self.pin, True)
-        self.pwm.ChangeDutyCycle(duty_cycle)
+        """
+            incrememnts the duty cycle
+        """
+        self.turning = True
+        while self.turning:
+            if self.duty_cycle < 12:                # Don't increment past max position
+                self.duty_cycle = self.duty_cycle + self.increment
+            self.set_pwm()
+            sleep(self.delay)
+
+    def center(self):
+        """
+        Centers the servo
+        """
+        self.duty_cycle = 7
+        set_pwm()
 
     def stop_turning(self):
+        self.turning = False                        # Break turning loop
         duty_cycle = 0
         GPIO.output(self.pin, False)
         self.pwm.ChangeDutyCycle(duty_cycle)

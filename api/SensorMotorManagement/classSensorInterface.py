@@ -8,7 +8,7 @@ class SensorInterface(I2CInterface):
 
     def get_data(self):
         self.write_byte(self.sensorid)
-        data = self.read_data_7Bchunk()
+        data = self.read_data_chunk(7)  # Read 7 Byte chunk
         return data
 
     def format_data(self)->float: 
@@ -30,3 +30,5 @@ class SensorInterface(I2CInterface):
     def update(self):
         self.data = self.get_data()
         self.formatted_data = self.format_data()    
+
+        

@@ -8,9 +8,6 @@ class WebDecoder():
         #self.tilt = ServoController(19)
         self.invert = False
 
-    #def toggle_inverted(self):
-     #   self.invert = !(invert)
-
     def decode(self, keyValue):
         if keyValue == b'W':
             self.MCI.move_forward()

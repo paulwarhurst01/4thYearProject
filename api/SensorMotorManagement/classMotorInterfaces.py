@@ -6,19 +6,31 @@ class MotorSensorInterface(I2CInterface):
         self.status = self.get_motor_status()
 
     def get_motor_status():
-        status = self.read_byte()
+        self.write_byte(0x03)           # write diagnostic register address
+        status = self.read_byte()       # Read diagnostic registers
         return status
 
-    def get_formatted_data():
-        return "Motor Data"
+    def get_formatted_data(self):
+        if self.data != 0:
+            return "Motor Stalled"
+        else:
+            return "Motors Operating"
 
     def update():
         self.status = self.get_motor_status()
         self.formatted_data = self.get_formatted_data()
 
 class MotorControlInterface(I2CInterface):
+    def __init__:
+        """ Run once on instantiation """
+        self.write_byte(0x01)           # write Speed register address
+        self.write_byte(0x90)           # Set default speed
+
     def control_movement(self, direction: int):
-        self.write_byte(direction)
+        self.write_byte(0x2)            # Write direction register address
+        self.write_byte(direction)      # write direction
+        self.write_byte(0x00)           # Write enable register address
+        self.write_byte(0xFF)           # enable enable registers for all motors
 
     def move_forward(self):
         self.control_movement(1)
@@ -33,5 +45,9 @@ class MotorControlInterface(I2CInterface):
         self.control_movement(4)
 
     def reset_move(self):
-        self.control_movement(0)
+        self.write_byte(0x00)           # Write enable register address
+        self.write_byte(0x00)           # disable enable registers for all motors
+
+        
+        
 
