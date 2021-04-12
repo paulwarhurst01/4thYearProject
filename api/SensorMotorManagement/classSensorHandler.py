@@ -11,6 +11,12 @@ class SensorHandler():
         # Initiate tinydb database
         self.db = TinyDB("SensorMotorManagement/SensorMotorLogs/" + self.databasename)
 
+def initiate_sensor_array(self):
+        sensorsarray = []
+        for s in range(0, 13):
+            sensorsarray.append(SensorReading(s))
+        print("Sensors array initiatied")
+        return sensorsarray
 
     def get_database_name(self) -> str:
         """
@@ -21,13 +27,6 @@ class SensorHandler():
         time = str(dateTime.hour) + "h" + str(dateTime.minute) 
         databasename = date + "-" + time + ".json"
         return databasename
-
-    def initiate_sensor_array(self):
-        sensorsarray = []
-        for s in range(0, 13):
-            sensorsarray.append(SensorReading(s))
-        print("Sensors array initiatied")
-        return sensorsarray
 
     def update(self):
         tempjsonreadyarray = []

@@ -21,7 +21,7 @@ class MotorSensorInterface(I2CInterface):
         self.formatted_data = self.get_formatted_data()
 
 class MotorControlInterface(I2CInterface):
-    def __init__:
+    def __init__():
         """ Run once on instantiation """
         self.write_byte(0x01)           # write Speed register address
         self.write_byte(0x90)           # Set default speed

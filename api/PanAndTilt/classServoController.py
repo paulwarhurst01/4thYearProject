@@ -10,14 +10,14 @@ class ServoController():
     def __init__(self, pin, center_dc = 7, increment = 0.25):
         GPIO.setmode(GPIO.BOARD)
         GPIO.setup(pin, GPIO.OUT)
-        self.pin = pin
+        self.pin = pin                      # GPIO pin for PWM
         self.center_dc = center_dc          # the duty cycle for which the servo is centred
         self.duty_cycle = self.center_dc    # current duty cycle, begins at centre 
         self.increment = increment          # sets the change size of duty_cycle
         self.delay = 0.2                    # default sleep value
-        self.turning = False
-        self.pwm = GPIO.PWM(pin, 50)
-        self.pwm.start(0)
+        self.turning = False                # control for turning while loop
+        self.pwm = GPIO.PWM(pin, 50)        # set PWM signal @ 50Hz
+        self.pwm.start(0)                   # Start PWM
 
     def print_details(self):
         print("centre_dc: " + str(self.center_dc))
